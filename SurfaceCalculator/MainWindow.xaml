@@ -1,0 +1,53 @@
+﻿<Window x:Class="SurfaceCalculator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SurfaceCalculator"
+        mc:Ignorable="d"
+        Title="Surface Calculator" Height="300" Width="500">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Image x:Name="FormImage" Grid.ColumnSpan="2" Margin="6" Source="{Binding SelectedItem.Image, ElementName=FormComboBox}"/>
+            <Label Grid.Row="1" Content="Form:" VerticalContentAlignment="Center"/>
+            <ComboBox x:Name="FormComboBox"  Grid.Column="1" Grid.Row="1" Margin="6" VerticalContentAlignment="Center" Width="100" ItemsSource="{Binding FormDescriptions}"/>
+            <Label Grid.Row="2" Content="a:" VerticalContentAlignment="Center"/>
+            <TextBox x:Name="ATextBox" Grid.Column="1" Grid.Row="2" Margin="6" VerticalContentAlignment="Center" Width="100"/>
+            <Label Grid.Row="3" Content="b:" VerticalContentAlignment="Center" />
+            <TextBox x:Name="BTextBox" Grid.Column="1" Grid.Row="3" Margin="6" VerticalContentAlignment="Center" Width="100"/>
+        </Grid>
+        <DataGrid x:Name="FormDataGrid" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding Forms}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Form" Width="*" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="a" Width="*" Binding="{Binding A, StringFormat={}{0:0.000}}"/>
+                <DataGridTextColumn Header="b" Width="*" Binding="{Binding B, StringFormat={}{0:0.000}}"/>
+                <DataGridTextColumn Header="Surface" Width="2*" Binding="{Binding Surface, Mode=OneWay}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="AddButton" Content="Add" Grid.Row="1" Margin=" 6" Width="75" Height="26" Click="AddButton_Click"/>
+        <Button x:Name="RemoveButton" Grid.Column="1" Grid.Row="1" Content="Remove" Margin=" 6" Width="75" Height="26" Command="ApplicationCommands.Delete" CommandTarget="{Binding ElementName=FormDataGrid, Mode=OneWay}"/>
+        <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="6">
+            <Label Content="Total:" VerticalAlignment="Center"/>
+            <TextBlock x:Name="TotalTextBlock" Text="0" Width="150" TextAlignment="Right" VerticalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+</Window>
